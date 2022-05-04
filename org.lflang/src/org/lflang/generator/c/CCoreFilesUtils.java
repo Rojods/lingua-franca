@@ -111,15 +111,13 @@ public class CCoreFilesUtils {
         boolean threading,
         SchedulerOption scheduler
     ) {
-        List<String> threadSupportFiles = List.of(
+        return threading ? List.of(
             "threaded/scheduler.h",
             "threaded/scheduler_instance.h",
             "threaded/scheduler_sync_tag_advance.c",
             "threaded/scheduler_" + scheduler + ".c",
-            "threaded/reactor_threaded.c"
-        );
-        if (scheduler == SchedulerOption.QS)
-            threadSupportFiles.add("threaded/scheduler_QS.h");
-        return threading ? threadSupportFiles : List.of("reactor.c");
+            "threaded/reactor_threaded.c",
+            scheduler == SchedulerOption.QS ? "threaded/scheduler_QS.h" : ""
+        ) : List.of("reactor.c");
     }
 }

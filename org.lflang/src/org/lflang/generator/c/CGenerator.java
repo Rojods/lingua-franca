@@ -51,6 +51,7 @@ import org.lflang.TargetConfig;
 import org.lflang.TargetProperty;
 import org.lflang.TargetProperty.ClockSyncMode;
 import org.lflang.TargetProperty.CoordinationType;
+import org.lflang.TargetProperty.SchedulerOption;
 import org.lflang.TimeValue;
 import org.lflang.federated.FedFileConfig;
 import org.lflang.federated.FederateInstance;
@@ -561,6 +562,18 @@ public class CGenerator extends GeneratorBase {
             if (targetConfig.dockerOptions != null && mainDef != null) {
                 dockerGenerator.addFile(
                     dockerGenerator.fromData(lfModuleName, federate.name, fileConfig));
+            }
+
+            // Generate schedule.h if QS scheduler is used.
+            if (targetConfig.schedulerType == SchedulerOption.QS) {
+                var scheduleGenerator = new SmtScheduleGenerator(fileConfig, errorReporter);
+                var scheduleFile = fileConfig.getSrcGenPath() + File.separator + "schedule.h";
+                var scheduleCode = scheduleGenerator.generateScheduleCode();
+                try {
+                    scheduleCode.writeToFile(scheduleFile);
+                } catch (IOException e) {
+                    Exceptions.sneakyThrow(e);
+                }
             }
 
             if (targetConfig.useCmake) {
