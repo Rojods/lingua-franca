@@ -32,6 +32,7 @@ import java.util.List;
 import org.lflang.ErrorReporter;
 import org.lflang.FileConfig;
 import org.lflang.TargetConfig;
+import org.lflang.TargetProperty.SchedulerOption;
 import org.lflang.generator.CodeBuilder;
 import org.lflang.util.FileUtil;
 
@@ -225,11 +226,13 @@ class CCmakeGenerator {
                     cMakeCode.pr("add_link_options( "+compilerFlag+")");
             }
         }
-        cMakeCode.newLine();
 
-        cMakeCode.pr("add_compile_definitions(SCHEDULER_QS)");
-        cMakeCode.newLine();
-
+        if (targetConfig.schedulerType == SchedulerOption.QS) {
+            cMakeCode.newLine();
+            cMakeCode.pr("add_compile_definitions(SCHEDULER_QS)");
+            cMakeCode.newLine();
+        }
+        
         // Add the install option
         cMakeCode.pr("install(");
         cMakeCode.indent();
