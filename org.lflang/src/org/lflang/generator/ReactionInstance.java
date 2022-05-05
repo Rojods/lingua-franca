@@ -208,6 +208,8 @@ public class ReactionInstance extends NamedInstance<Reaction> {
      * If left at the default, parallel execution will be based purely
      * on levels.
      */
+    //TODO:
+    public long reactionid ;
     public long chainID = 1L;
 
     /**
