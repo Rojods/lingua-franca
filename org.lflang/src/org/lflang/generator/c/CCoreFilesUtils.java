@@ -1,6 +1,7 @@
 package org.lflang.generator.c;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.lflang.TargetProperty.SchedulerOption;
 
@@ -111,13 +112,15 @@ public class CCoreFilesUtils {
         boolean threading,
         SchedulerOption scheduler
     ) {
-        return threading ? List.of(
+        List<String> supportFiles = new ArrayList<String>(Arrays.asList(
             "threaded/scheduler.h",
             "threaded/scheduler_instance.h",
             "threaded/scheduler_sync_tag_advance.c",
             "threaded/scheduler_" + scheduler + ".c",
-            "threaded/reactor_threaded.c",
-            scheduler == SchedulerOption.QS ? "threaded/scheduler_QS.h" : ""
-        ) : List.of("reactor.c");
+            "threaded/reactor_threaded.c"
+        ));
+        if (scheduler == SchedulerOption.QS)
+            supportFiles.add("threaded/scheduler_QS.h");
+        return threading ? supportFiles : List.of("reactor.c");
     }
 }
