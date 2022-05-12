@@ -450,12 +450,11 @@ private static String generateReactionInstanceList(
     generateReactionInstances(currentFederate,reactor, isFederated, code);
     return code.toString();
 }
-private static int generateReactionInstances(
+private static void generateReactionInstances(
         FederateInstance currentFederate,
         ReactorInstance reactor,
         boolean isFederated,
-        CodeBuilder code,
-        int reactionId
+        CodeBuilder code
     ){
         //FIXME: CHECK WHETHER THE PARENT OF REACTOR IS BANK
         if (reactor != null && (reactor.isBank()||(reactor.getParent() != null&& reactor.getParent().isBank()))) {
@@ -484,7 +483,6 @@ private static int generateReactionInstances(
                  generateReactionInstances(currentFederate, child, isFederated, code);
             }
         }
-        return reactionId;
     }
 
     /**
