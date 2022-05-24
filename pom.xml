@@ -25,7 +25,7 @@
         <xtextVersion>2.26.0</xtextVersion>
         <tychoVersion>2.6.0</tychoVersion>
         <runtimeVersion>3.24.0</runtimeVersion>
-
+        <z3Version>4.8.16</z3Version>
         <!-- Maven only properties -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
